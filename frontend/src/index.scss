@@ -1,0 +1,17 @@
+// Tailwindcss
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+
+html {
+    font-size: 62.5%; // 1 rem = 10px; 10px / 16px = 62.5%
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    font-family: 'Open Sans', sans-serif;
+}
