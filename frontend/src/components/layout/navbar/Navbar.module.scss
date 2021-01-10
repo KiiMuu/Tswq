@@ -1,0 +1,14 @@
+.show_nav {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    transition: all .15s ease-in-out;
+}
+
+.hide_nav {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: all .15s ease-in-out;
+}
