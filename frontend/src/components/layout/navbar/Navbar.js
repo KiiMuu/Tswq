@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-import { useDetectOutsideClicks } from '../../../hooks/useDetectOutsideClick';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.scss';
 import { 
@@ -8,14 +6,11 @@ import {
     HiMenuAlt3,
     HiOutlineLogout
 } from 'react-icons/hi';
-// import { Link, NavLink } from 'react-router-dom';
+import useToggle from '../../../hooks/useToggle';
 
 const Navbar = () => {
 
-    const navRef = useRef(null);
-    const [isNavOpen, setIsNavOpen] = useDetectOutsideClicks(navRef, false);
-
-    const toggleNav = () => setIsNavOpen(!isNavOpen);
+    const { isOpen, handleToggle, elementRef } = useToggle();
 
     return (
         <div className="text-defaultSize bg-gray-800 shadow-md">
@@ -45,7 +40,7 @@ const Navbar = () => {
                     {/* mobile menu icon */}
                     <div className="flex items-center md:hidden">
                         <button 
-                            onClick={toggleNav}
+                            onClick={handleToggle}
                             type="button" 
                             className="bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300" aria-haspopup="true">
                             <HiMenuAlt3 
@@ -54,7 +49,7 @@ const Navbar = () => {
                         </button>
                     </div>
                     {/* mobile menu content */}
-                    <div ref={navRef} className={`absolute top-0 inset-x-0 py-4 px-2 md:hidden ${isNavOpen ? styles['show_nav'] : styles['hide_nav']}`}>
+                    <div ref={elementRef} className={`absolute top-0 inset-x-0 py-4 px-2 md:hidden ${isOpen ? styles['show_nav'] : styles['hide_nav']}`}>
                         <div className="rounded-md shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div className="px-5 pt-4 flex items-center justify-between">
                                 <div className="flex items-baseline uppercase">
@@ -64,7 +59,7 @@ const Navbar = () => {
                                 </div>
                                 <div className="flex items-baseline">
                                     <button
-                                        onClick={toggleNav} 
+                                        onClick={handleToggle} 
                                         type="button" 
                                         className="text-gray-800 py-2 px-4 rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                         <HiOutlineX

@@ -3,7 +3,7 @@ import Rating from './Rating';
 
 const Product = ({ product }) => {
     return (
-        <div className="md:flex w-full sm:w-6/6 md:w-3/6 lg:w-2/6 mb-8 px-4">
+        <div className="md:flex w-full md:w-3/6 lg:w-2/6 mb-8 px-4">
             <div className="rounded-md overflow-hidden bg-white shadow-lg text-defaultSize">
                 <Link to={`/product/${product._id}`}>
                     <img
@@ -19,7 +19,7 @@ const Product = ({ product }) => {
                     <h3 className="text-gray-500 mb-8">
                         <Rating rating={product.rating} text={`${product.numReviews} reviews`} />
                     </h3>
-                    <span className="bg-primary text-white py-2 px-5 rounded-md text-fontMed">
+                    <span className="bg-green-200 text-primary-dark py-1 px-4 rounded-full text-fontMed">
                         ${product.price}
                     </span>
                 </div>
