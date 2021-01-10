@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 // components
 import Navbar from './components/layout/navbar/Navbar';
+import HomeScreen from './screens/home/HomeScreen';
 import Footer from './components/layout/footer/Footer';
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
         <Fragment>
             <Navbar />
             <main className="container">
-                Hi Tswq
+                <HomeScreen />
             </main>
             <Footer />
         </Fragment>
