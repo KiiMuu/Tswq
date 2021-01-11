@@ -1,0 +1,49 @@
+@mixin buttonEffect1 {
+    position: relative;
+    padding: 1.4rem 2rem;
+    transition: all .15s ease;
+    background-color: rgba($primary, .3);
+    color: #000;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border-radius: .3rem;
+        background-color: rgba($primary, .5);
+        width: .3rem;
+        height: 5rem;
+        transition: all .15s ease;
+    }
+    span {
+        position: relative;
+        text-transform: uppercase;
+        .icon {
+            opacity: 0;
+            display: inline;
+            margin-top: -.28rem;
+            margin-left: -1rem;
+            transition: all .2s ease;
+        }
+    }
+    &:hover {
+        span {
+            color: #fff;
+            .icon {
+                opacity: 1;
+                margin-left: 1rem;
+            }
+        }
+        &::before {
+            width: 100%;
+            background-color: rgba($primary, 1);
+        }
+    }
+    &:focus {
+        outline: none;
+    }
+    &:active {
+        transform: scale(.9);
+    }
+}

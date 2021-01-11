@@ -19,7 +19,7 @@ const Product = ({ product }) => {
                     <h3 className="text-gray-500 mb-8">
                         <Rating rating={product.rating} text={`${product.numReviews} reviews`} />
                     </h3>
-                    <span className="bg-green-200 text-primary-dark py-1 px-4 rounded-full text-fontMed">
+                    <span className="bg-blue-200 text-primary-dark py-1 px-4 rounded-full text-fontMed">
                         ${product.price}
                     </span>
                 </div>

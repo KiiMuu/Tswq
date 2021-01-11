@@ -14,11 +14,11 @@ module.exports = {
             },
             colors: {
                 primary: {
-                    DEFAULT: '#10B981',
-                    light: '#34D399',
-                    dark: '#047857'
+                    DEFAULT: '#0284C7',
+                    light: '#38BDF8',
+                    dark: '#075985'
                 },
-                secondary: '#0891B2'
+                secondary: '#06B6D4'
             }
         },
         container: {
