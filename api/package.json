@@ -3,13 +3,22 @@
   "version": "1.0.0",
   "description": "API for Tswq application",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "server": "nodemon app",
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Karim MuHamad",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7"
   }
 }

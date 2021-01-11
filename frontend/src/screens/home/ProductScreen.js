@@ -17,7 +17,7 @@ const ProductScreen = ({ match }) => {
         }
 
         getProduct();
-    }, [match.params.id]);
+    }, [match]);
 
     return (
         <Fragment>
