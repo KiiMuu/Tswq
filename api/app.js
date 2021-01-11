@@ -3,28 +3,22 @@ import dotenv from 'dotenv';
 dotenv.config();
 import colors from 'colors';
 import connectDB from './config/db.js';
-import products from './data/products.js';
+
+// routes
+import productRoutes from './routes/productRoutes.js';
 
 // db connection
 connectDB();
 
 const app = express();
 
-// routes
+// use routes
 app.get('/', (req, res) => {
     res.send('API is on fire!')
 });
+app.use('/api/products', productRoutes);
 
-app.get('/api/products', (req, res) => {
-    res.json(products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-    const pro = products.find(p => p._id === req.params.id);
-
-    res.json(pro)
-});
-
+// app listening
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
