@@ -1,8 +1,21 @@
-import { Fragment } from 'react';
-import products from '../../products';
+import { Fragment, useState, useEffect } from 'react';
+import axios from 'axios';
 import Product from '../../components/product/Product';
 
 const HomeScreen = () => {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const { data } = await axios.get('/api/products');
+
+            setProducts(data);
+        }
+
+        getProducts();
+    }, []);
+
     return (
         <Fragment>
             <div className="mt-12">
