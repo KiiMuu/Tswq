@@ -1,0 +1,42 @@
+@import '../../../helpers/Variables';
+
+.alert-wrapper {
+    font-size: $default-font-size;
+    .alert {
+        display: flex;
+        padding: 2rem 1.5rem;
+        border-radius: .4rem;
+        span {
+            margin-right: .8rem;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+        p {
+            line-height: 1.7;
+        }
+        // alert type
+        &.normal {
+            color: #4B5563;
+            background-color: #F3F4F6;
+        }
+        &.danger {
+            color: #EF4444;
+            background-color: #FEE2E2;
+        }
+        &.success {
+            color: #10B981;
+            background-color: #D1FAE5;
+        }
+        &.warning {
+            color: #D97706;
+            background-color: #FEF3C7;
+        }
+        &.info {
+            color: #0EA5E9;
+            background-color: #E0F2FE;
+            border-color: #0EA5E9;
+        }
+    }
+}

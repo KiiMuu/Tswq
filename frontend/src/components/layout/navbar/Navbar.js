@@ -49,7 +49,7 @@ const Navbar = () => {
                         </button>
                     </div>
                     {/* mobile menu content */}
-                    <div ref={elementRef} className={`absolute top-0 inset-x-0 py-4 px-2 md:hidden ${isOpen ? styles['show_nav'] : styles['hide_nav']}`}>
+                    <div ref={elementRef} className={`absolute top-0 inset-x-0 z-50 py-4 px-2 md:hidden ${isOpen ? styles['show_nav'] : styles['hide_nav']}`}>
                         <div className="rounded-md shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div className="px-5 pt-4 flex items-center justify-between">
                                 <div className="flex items-baseline uppercase">
