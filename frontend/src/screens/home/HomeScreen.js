@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Product from '../../components/product/Product';
 import { getAllProducts } from '../../actions/productActions';
-import ProductSkeleton from '../../skeletons/ProductSkeleton';
+import ProductsSkeleton from '../../skeletons/ProductsSkeleton';
 import Alert from '../../components/layout/alert/Alert';
 import { 
     HiOutlineExclamationCircle, 
@@ -28,7 +28,7 @@ const HomeScreen = () => {
                 {loading ? (
                     <div className="flex flex-wrap -mx-4">
                         {[...Array(6)].map((_, i) => (
-                            <ProductSkeleton key={i} />
+                            <ProductsSkeleton key={i} />
                         ))}
                     </div>
                 ) : error ? (

@@ -2,8 +2,8 @@
     position: relative;
     padding: 1.4rem 2rem;
     transition: all .15s ease;
-    background-color: rgba($primary, .3);
-    color: #000;
+    background-color: #BFDBFE;
+    color: $primary-dark;
     &::before {
         content: '';
         position: absolute;
@@ -11,7 +11,7 @@
         left: 0;
         display: block;
         border-radius: .3rem;
-        background-color: rgba($primary, .5);
+        background-color: rgba($primary, .8);
         width: .3rem;
         height: 5rem;
         transition: all .15s ease;
@@ -37,7 +37,7 @@
         }
         &::before {
             width: 100%;
-            background-color: rgba($primary, 1);
+            background-color: $primary;
         }
     }
     &:focus {
