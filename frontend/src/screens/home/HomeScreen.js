@@ -1,30 +1,34 @@
-import { Fragment, useState, useEffect } from 'react';
-import axios from 'axios';
+import { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Product from '../../components/product/Product';
+import { getAllProducts } from '../../actions/productActions';
 
 const HomeScreen = () => {
+    
+    const dispatch = useDispatch();
 
-    const [products, setProducts] = useState([]);
+    const productList = useSelector(state => state.productList);
+    const { loading, error, products } = productList;
 
     useEffect(() => {
-        const getProducts = async () => {
-            const { data } = await axios.get('/api/products');
-
-            setProducts(data);
-        }
-
-        getProducts();
-    }, []);
+        dispatch(getAllProducts());
+    }, [dispatch]);
 
     return (
         <Fragment>
             <div className="mt-12">
                 <h1 className="mb-5 text-defaultSize uppercase text-gray-800">Latest products</h1>
-                <div className="flex flex-wrap -mx-4">
-                    {products.map(product => (
-                        <Product product={product} key={product._id} />
-                    ))}
-                </div>
+                {loading ? (
+                    <span>Loading...</span>
+                ) : error ? (
+                    <span>{error}</span>
+                ) : (
+                    <div className="flex flex-wrap -mx-4">
+                        {products.map(product => (
+                            <Product product={product} key={product._id} />
+                        ))}
+                    </div>
+                )}
             </div>
         </Fragment>
     )
