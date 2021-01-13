@@ -1,7 +1,7 @@
 const CartScreen = () => {
     return (
         <div className="mt-12">
-            Cart            
+            Cart    
         </div>
     )
 }

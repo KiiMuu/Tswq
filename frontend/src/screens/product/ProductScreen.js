@@ -16,7 +16,6 @@ const ProductScreen = () => {
 
     const { id } = useParams();
     const history = useHistory();
-
     const [quantity, setQuantity] = useState(0);
 
     const dispatch = useDispatch();
@@ -90,7 +89,7 @@ const ProductScreen = () => {
                                         value={quantity} 
                                         onChange={handleChange}>
                                         {[...Array(product.countInStock).keys()].map(x => (
-                                            <option 
+                                            <option
                                                 key={x + 1}
                                                 value={x + 1}
                                             >{x + 1}</option>
