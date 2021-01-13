@@ -11,3 +11,9 @@
 .product_btn {
     @include buttonEffect1;
 }
+
+.disabled {
+    background: #ccc; 
+    color: #666;
+    pointer-events: none;
+}

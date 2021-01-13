@@ -4,7 +4,7 @@ import Rating from './Rating';
 const Product = ({ product }) => {
     return (
         <div className="md:flex w-full md:w-3/6 lg:w-2/6 mb-8 px-4">
-            <div className="rounded-md overflow-hidden bg-white shadow-lg text-defaultSize">
+            <div className="rounded-md overflow-hidden bg-white shadow-md text-defaultSize">
                 <Link to={`/product/${product._id}`}>
                     <img
                         className="w-full h-96"
