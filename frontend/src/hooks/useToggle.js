@@ -11,11 +11,13 @@ const useToggle = () => {
     }, [isOpen, setIsOpen]);
 
     useEffect(() => {
-        if (isOpen) document.addEventListener('keydown', handleEscKey, false);
+        if (isOpen) document.addEventListener('keydown', handleEscKey, false, {
+            once: true
+        });
 
-        return () => {
-            document.removeEventListener('keydown', handleEscKey, false);
-        }
+        // return () => {
+        //     document.removeEventListener('keydown', handleEscKey, false);
+        // }
     }, [handleEscKey, isOpen]);
 
     const handleToggle = () => setIsOpen(!isOpen);

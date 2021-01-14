@@ -12,14 +12,17 @@ export const useDetectOutsideClicks = (element, initialState) => {
         }
 
         if (isOpen) {
-            window.addEventListener('click', clickedOutside);
+            window.addEventListener('click', clickedOutside, { 
+                once: true // fire click once && then remove it
+            });
         }
 
+        // INSTEAD OF `once: true`, you can:
         // unset our event listener once the dropdown is closed.
         // This is a way to perform any cleanup.
-        return () => {
-            window.removeEventListener('click', clickedOutside);
-        }
+        // return () => {
+        //     window.removeEventListener('click', clickedOutside);
+        // }
     }, [isOpen, element]);
 
     return [isOpen, setIsOpen];

@@ -16,7 +16,7 @@ const ProductScreen = () => {
 
     const { id } = useParams();
     const history = useHistory();
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     const dispatch = useDispatch();
 
