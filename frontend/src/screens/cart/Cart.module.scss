@@ -1,0 +1,6 @@
+@import '../../helpers/Variables';
+@import '../../helpers/Mixins';
+
+.checkout-btn {
+    @include buttonEffect1;
+}
