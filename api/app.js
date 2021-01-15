@@ -1,11 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import morgan from 'morgan';
 import colors from 'colors';
 import connectDB from './config/db.js';
 
 // routes
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 // middlewares
 import {
@@ -16,12 +18,18 @@ import {
 // db connection
 connectDB();
 
+// app initialization
 const app = express();
+
+// use middlewares
+app.use(express.json());
+app.use(morgan('dev'));
 
 // use routes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
-// use middlewares
+// error handlers
 app.use(routeHandler);
 app.use(errorHandler);
 
