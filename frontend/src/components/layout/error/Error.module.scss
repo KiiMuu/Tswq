@@ -1,0 +1,33 @@
+.errorWrapper {
+    overflow: hidden;
+    position: fixed;
+    top: 15%;
+    right: 2%;
+    background-color: rgba(#EF4444, .93);
+    padding: 2.5rem;
+    animation: animateMsg .15s ease;
+    .error {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #f3f3f3;
+        span {
+            margin-right: 1rem;
+            font-size: 1.8rem;
+        }
+    }
+}
+
+@keyframes animateMsg {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+        transform-origin: top right;
+    }
+}

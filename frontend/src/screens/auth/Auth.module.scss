@@ -1,0 +1,43 @@
+@import '../../helpers/Variables';
+
+h1 {
+    background-image: linear-gradient(to right, $primary-light, $primary-dark);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    input {
+        padding-left: 3rem;
+        outline: none;
+        border: none;
+        border-bottom: .2rem solid rgba(#aaa, .2);
+        height: 5rem;
+        width: 100%;
+        color: #111827;
+    }
+    .border {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        background: $primary;
+        width: 0;
+        height: 2px;
+        transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    input:focus + .border {
+        left: 0;
+        width: 100%;
+    }
+
+    button[type='submit'] {
+        background-image: linear-gradient(to right, $secondary, $primary-light);
+        height: 4rem;
+        color: #f3f3f3;
+        outline: none;
+    }
+}
