@@ -3,7 +3,8 @@ const router = express.Router();
 
 // controllers
 import {
-    authUser,
+    signInUser,
+    signUpUser,
     getUserProfile
 } from '../controllers/userController.js';
 
@@ -13,7 +14,12 @@ import { protectRoute } from '../middleware/authMiddleware.js';
 // @desc    Auth user & get token
 // @route   POST /api/users/signin
 // @access  Public
-router.post('/signin', authUser);
+router.post('/signin', signInUser);
+
+// @desc    Signup a user
+// @route   POST /api/users
+// @access  Public
+router.post('/', signUpUser);
 
 // @desc    Get user profile
 // @route   GET /api/users/profile
