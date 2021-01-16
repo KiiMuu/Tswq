@@ -7,7 +7,7 @@ import { signin } from '../../actions/userActions';
 import FormContainer from '../../components/form/FormContainer';
 import Error from '../../components/layout/error/Error';
 import { 
-    HiOutlineUser, 
+    HiOutlineMail, 
     HiOutlineKey,
     HiOutlineExclamationCircle
 } from 'react-icons/hi';
@@ -46,7 +46,7 @@ const SigninScreen = () => {
             <form onSubmit={handleSubmit} noValidate>
                 <div className="relative mb-10">
                     <span className="absolute left-0 top-5">
-                        <HiOutlineUser className="w-9 h-9 text-primary" />
+                        <HiOutlineMail className="w-9 h-9 text-primary" />
                     </span>
                     <input
                         type='email' 
@@ -91,7 +91,7 @@ const SigninScreen = () => {
                     <Link 
                         to={redirect ? `/signup?redirect/${redirect}` : '/signup'}
                         className="text-blue-400 ml-3">
-                        Signup
+                        Sign up
                     </Link>
                 </div>
             </form>
