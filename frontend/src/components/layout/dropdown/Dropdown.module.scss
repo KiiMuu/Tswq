@@ -1,0 +1,37 @@
+.dropdown {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    .dropdownContent {
+        position: absolute;
+        top: 4.5rem;
+        right: 0;
+        background-color: white;
+        min-width: 100%;
+        width: 20rem;
+
+        // effect
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0);
+        transition: all .15s ease;
+        transform-origin: top right;
+        .item {
+            &:not(:last-child) {
+                border-bottom: 1px solid rgba(#aaa, .2);
+            }
+            text-transform: lowercase;
+            padding: 10px 30px;
+            cursor: pointer;
+            transition: all .15 ease;
+            &:hover {
+                background-color: rgba(#aaa, .14);
+            }
+        }
+    }
+    .dropdownContent.open {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+}

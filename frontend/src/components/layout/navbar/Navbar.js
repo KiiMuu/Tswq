@@ -1,16 +1,35 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Navbar.module.scss';
 import { 
     HiOutlineShoppingCart,
     HiOutlineX,
     HiMenuAlt3,
-    HiOutlineLogout
+    HiOutlineLogout,
+    HiOutlineUser
 } from 'react-icons/hi';
 import useToggle from '../../../hooks/useToggle';
+import Dropdown from '../../layout/dropdown/Dropdown';
+import { logout } from '../../../actions/userActions';
 
 const Navbar = () => {
 
     const { isOpen, handleToggle, elementRef } = useToggle();
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const handleLogout = () => {
+        dispatch(logout());
+    }
+
+    // dropdown content
+    let options = [
+        {id: 1, content: <span className="text-gray-700"><HiOutlineUser className="w-8 h-8 inline-block text-primary" /> Profile</span>},
+        {id: 2, content: <span onClick={handleLogout} className="text-gray-700"><HiOutlineLogout className="w-8 h-8 inline-block text-primary" /> Signout</span>}
+    ]
 
     return (
         <div className="text-defaultSize bg-gray-800 shadow-md">
@@ -29,12 +48,20 @@ const Navbar = () => {
                                 />
                                 Cart
                             </Link>
-                            <Link className="inline-flex items-center text-gray-300 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md" to='/signin'>
-                                <HiOutlineLogout
-                                    className="-ml-1 mr-2 h-7 w-7 text-gray-300"
+                            {userInfo ? (
+                                <Dropdown 
+                                    name={userInfo.name}
+                                    items={options}
+                                    style={{ color: '#f3f3f3', textTransform: 'uppercase', outline: 'none', top: '-.4rem', position: 'relative' }}
                                 />
-                                Sign in
-                            </Link>
+                            ) : (
+                                <Link className="inline-flex items-center text-gray-300 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md" to='/signin'>
+                                    <HiOutlineLogout
+                                        className="-ml-1 mr-2 h-7 w-7 text-gray-300"
+                                    />
+                                    Sign in
+                                </Link>
+                            )}
                         </div>
                     </div>
                     {/* mobile menu icon */}
