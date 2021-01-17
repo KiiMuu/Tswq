@@ -1,0 +1,12 @@
+@import '../../helpers/Variables';
+@import '../../helpers/Mixins';
+
+.placeOrderBtn {
+    @include buttonEffect1;
+}
+
+.disabled {
+    background: #ccc; 
+    color: #666;
+    pointer-events: none;
+}
