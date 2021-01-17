@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../../actions/cartActions';
+import CheckoutSteps from '../../components/checkout/CheckoutSteps';
 
 const ShippingScreen = () => {
 
@@ -30,6 +31,7 @@ const ShippingScreen = () => {
         <div className="mt-16 text-defaultSize">
             <div className="flex flex-wrap justify-center items-center -mx-4">
                 <div className="w-full md:w-3/6 px-4">
+                    <CheckoutSteps step1 step2 />
                     <h1 className="uppercase font-extrabold">Shipping</h1>
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="mb-5">
