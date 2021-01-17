@@ -9,12 +9,14 @@ import Footer from './components/layout/footer/Footer';
 import SignupScreen from './screens/auth/SignupScreen';
 import SigninScreen from './screens/auth/SigninScreen';
 import ProfileScreen from './screens/profile/ProfileScreen';
+import ShippingScreen from './screens/shipping/ShippingScreen';
 
 const App = () => {
     return (
         <Router>
             <Navbar />
             <main className="container">
+                <Route path='/shipping' component={ShippingScreen} />
                 <Route path='/signup' component={SignupScreen} />
                 <Route path='/signin' component={SigninScreen} />
                 <Route path='/profile' component={ProfileScreen} />
