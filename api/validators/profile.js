@@ -2,18 +2,18 @@ import { check } from 'express-validator';
 
 const profileValidator = [
     check('name')
-    .optional()
+    .optional({ checkFalsy: true })
     .not()
     .isEmpty()
     .withMessage('Please provide a name')
     .isLength({ min: 2 })
     .withMessage('At least 2 characters for name'),
     check('email')
-    .optional()
+    .optional({ checkFalsy: true })
     .isEmail()
     .withMessage('Please provide a valid email'),
     check('password')
-    .optional()
+    .optional({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('At least 6 characters for password')
 ];

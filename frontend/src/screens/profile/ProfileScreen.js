@@ -1,31 +1,33 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getUserDetails } from '../../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../../actions/userActions';
 import Error from '../../components/layout/error/Error';
+import Alert from '../../components/layout/alert/Alert';
 import { 
-    HiOutlineExclamationCircle
+    HiOutlineExclamationCircle,
+    HiOutlineCheckCircle
 } from 'react-icons/hi';
 
 const ProfileScreen = () => {
 
-    const location = useLocation();
     const history = useHistory();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState(null);
 
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.userDetails);
-    const { loading, error, user } = userDetails;
+    const { user } = userDetails;
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
+
+    const updateUser = useSelector(state => state.updateUser);
+    const { success, loading, error } = updateUser;
 
     useEffect(() => {
         if (!userInfo) {
@@ -43,11 +45,7 @@ const ProfileScreen = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-            setMessage('Passwords do not match');
-        } else {
-            // dispatch(signup(name, email, password));
-        }
+        dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
 
     return (
@@ -55,8 +53,16 @@ const ProfileScreen = () => {
             <div className="flex flex-wrap -mx-4">
                 <div className="w-full md:w-2/6 md:mb-0 mb-5 px-4">
                     <h1 className="uppercase font-extrabold">User Profile</h1>
-                    {message && <Error errorMsg={message} icon={<HiOutlineExclamationCircle />} />}
                     {error && <Error errorMsg={error} icon={<HiOutlineExclamationCircle />} />}
+                    {success && (
+                        <div className="mb-5">
+                            <Alert
+                                icon={<HiOutlineCheckCircle />}
+                                content="Profile updated successully" 
+                                type="success" 
+                            />
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="mb-5">
                             <input
@@ -78,29 +84,19 @@ const ProfileScreen = () => {
                                 onChange={e => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="mb-5">
-                            <input
-                                className="w-full h-20 pl-5 focus:outline-none focus:ring focus:border-blue-500 shadow rounded"
-                                type='password' 
-                                inputMode='text'
-                                placeholder='Type your password'
-                                value={password} 
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </div>
                         <div>
                             <input
                                 className="w-full h-20 pl-5 focus:outline-none focus:ring focus:border-blue-500 shadow rounded"
                                 type='password' 
                                 inputMode='text'
-                                placeholder='confirm your password'
-                                value={confirmPassword} 
-                                onChange={e => setConfirmPassword(e.target.value)}
+                                placeholder='Type your new password'
+                                value={password} 
+                                onChange={e => setPassword(e.target.value)}
                             />
                         </div>
                         <button 
                             type='submit' 
-                            className="w-full mt-10 uppercase text-fontMed focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full mt-5 uppercase text-fontMed focus:outline-none focus:ring focus:border-blue-300"
                         >{loading ? <Spinner /> : 'Save'}</button>
                     </form>
                 </div>
