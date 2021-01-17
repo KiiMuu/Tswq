@@ -8,6 +8,7 @@ import connectDB from './config/db.js';
 // routes
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 // middlewares
 import {
@@ -28,6 +29,7 @@ app.use(morgan('dev'));
 // use routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
 
 // error handlers
 app.use(routeHandler);
