@@ -30,8 +30,8 @@ const ShippingScreen = () => {
     return (
         <div className="mt-16 text-defaultSize">
             <div className="flex flex-wrap justify-center items-center -mx-4">
+                <CheckoutSteps step1 step2 />
                 <div className="w-full md:w-3/6 px-4">
-                    <CheckoutSteps step1 step2 />
                     <h1 className="uppercase font-extrabold">Shipping</h1>
                     <form onSubmit={handleSubmit} noValidate>
                         <div className="mb-5">

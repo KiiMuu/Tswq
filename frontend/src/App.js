@@ -10,6 +10,7 @@ import SignupScreen from './screens/auth/SignupScreen';
 import SigninScreen from './screens/auth/SigninScreen';
 import ProfileScreen from './screens/profile/ProfileScreen';
 import ShippingScreen from './screens/shipping/ShippingScreen';
+import PaymentScreen from './screens/payment/PaymentScreen';
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
             <Navbar />
             <main className="container">
                 <Route path='/shipping' component={ShippingScreen} />
+                <Route path='/payment' component={PaymentScreen} />
                 <Route path='/signup' component={SignupScreen} />
                 <Route path='/signin' component={SigninScreen} />
                 <Route path='/profile' component={ProfileScreen} />
