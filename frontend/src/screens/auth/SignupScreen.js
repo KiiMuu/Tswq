@@ -59,6 +59,7 @@ const SignupScreen = () => {
                         <HiOutlineUserAdd className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='text' 
                         inputMode='text'
                         placeholder='Type your name'
@@ -72,6 +73,7 @@ const SignupScreen = () => {
                         <HiOutlineMail className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='email' 
                         inputMode='email'
                         placeholder='Type your email'
@@ -85,6 +87,7 @@ const SignupScreen = () => {
                         <HiOutlineKey className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='password' 
                         inputMode='text'
                         placeholder='Type your password'
@@ -98,6 +101,7 @@ const SignupScreen = () => {
                         <HiOutlineCheckCircle className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='password' 
                         inputMode='text'
                         placeholder='confirm your password'

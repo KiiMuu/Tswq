@@ -49,6 +49,7 @@ const SigninScreen = () => {
                         <HiOutlineMail className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='email' 
                         inputMode='email'
                         placeholder='Type your email'
@@ -62,6 +63,7 @@ const SigninScreen = () => {
                         <HiOutlineKey className="w-9 h-9 text-primary" />
                     </span>
                     <input
+                        className={styles.controlField}
                         type='password' 
                         inputMode='text'
                         placeholder='Type your password'

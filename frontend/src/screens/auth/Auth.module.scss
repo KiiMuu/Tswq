@@ -10,7 +10,7 @@ h1 {
 }
 
 form {
-    input {
+    .controlField {
         padding-left: 3rem;
         outline: none;
         border: none;
@@ -29,7 +29,7 @@ form {
         transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 
-    input:focus + .border {
+    .controlField:focus + .border {
         left: 0;
         width: 100%;
     }

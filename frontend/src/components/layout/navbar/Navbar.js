@@ -27,7 +27,7 @@ const Navbar = () => {
 
     // dropdown content
     let options = [
-        {id: 1, content: <span className="text-gray-700"><HiOutlineUser className="w-8 h-8 inline-block text-primary" /> Profile</span>},
+        {id: 1, content: <Link to='/profile' className="text-gray-700"><HiOutlineUser className="w-8 h-8 inline-block text-primary" /> Profile</Link>},
         {id: 2, content: <span onClick={handleLogout} className="text-gray-700"><HiOutlineLogout className="w-8 h-8 inline-block text-primary" /> Signout</span>}
     ]
 

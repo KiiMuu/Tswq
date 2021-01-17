@@ -8,6 +8,7 @@ import CartScreen from './screens/cart/CartScreen';
 import Footer from './components/layout/footer/Footer';
 import SignupScreen from './screens/auth/SignupScreen';
 import SigninScreen from './screens/auth/SigninScreen';
+import ProfileScreen from './screens/profile/ProfileScreen';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
             <main className="container">
                 <Route path='/signup' component={SignupScreen} />
                 <Route path='/signin' component={SigninScreen} />
+                <Route path='/profile' component={ProfileScreen} />
                 <Route path='/product/:id' component={ProductScreen} />
                 <Route path='/cart/:id?' component={CartScreen} />
                 <Route exact path='/' component={HomeScreen} />
