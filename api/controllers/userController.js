@@ -69,4 +69,38 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
     }
 });
 
-export { signInUser, signUpUser, getUserProfile }
+const updateUserProfile = asyncHandler(async (req, res, next) => {
+    // req.user._id => whatever the current logged in user is
+    const user = await User.findById(req.user._id);
+
+    const { name, email, password } = req.body;
+
+    if (user) {
+        user.name = name || user.name;
+        user.email = email || user.email;
+
+        if (password) {
+            user.password = password;
+        }
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            token: userToken(updatedUser._id)
+        });
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
+export { 
+    signInUser, 
+    signUpUser, 
+    getUserProfile,
+    updateUserProfile
+}
