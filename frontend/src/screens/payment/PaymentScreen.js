@@ -44,7 +44,7 @@ const PaymentScreen = () => {
                             <div className="mt-10 space-y-4">
                                 <div className="flex items-center">
                                     <input 
-                                        value="PayPal"
+                                        value={paymentMethod}
                                         id="paypal" 
                                         name="paymentMethod" 
                                         type="radio" 

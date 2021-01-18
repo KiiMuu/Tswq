@@ -20,9 +20,9 @@ const CartScreen = () => {
     const location = useLocation();
     const history = useHistory();
 
-    // ?quantity=1 as output of quantity 
-    // this gets the value of quantity in a Number format
-    const quantity = location.search ? Number(location.search.split('=')[1]) : 1;
+    // ?qty=1 as output of qty 
+    // this gets the value of qty in a Number format
+    const qty = location.search ? Number(location.search.split('=')[1]) : 1;
 
     const dispatch = useDispatch();
 
@@ -31,9 +31,9 @@ const CartScreen = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(addToCart(id, quantity));
+            dispatch(addToCart(id, qty));
         }
-    }, [dispatch, id, quantity]);
+    }, [dispatch, id, qty]);
 
     const getQuantityTotal = () => {
         return cartItems.reduce((acc, item) => acc + item.qty, 0);

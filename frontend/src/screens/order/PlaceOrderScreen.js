@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveShippingAddress } from '../../actions/cartActions';
+import { createOrder } from '../../actions/orderActions';
 import CheckoutSteps from '../../components/checkout/CheckoutSteps';
 import Alert from '../../components/layout/alert/Alert';
+import Spinner from '../../components/layout/spinner/Spinner';
 import styles from './PlaceOrder.module.scss';
-import { HiOutlineInformationCircle, HiOutlineShoppingCart } from 'react-icons/hi';
+import { 
+    HiOutlineExclamation,
+    HiOutlineInformationCircle, 
+    HiOutlineShoppingCart 
+} from 'react-icons/hi';
 
 const PlaceOrderScreen = () => {
 
-    const cart = useSelector(state => state.cart);
+    const history = useHistory();
+
     const dispatch = useDispatch();
+    const cart = useSelector(state => state.cart);
 
     // prices
     const addDecimals = (num) => {
@@ -22,7 +29,27 @@ const PlaceOrderScreen = () => {
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
     cart.totalPrice = addDecimals(Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice));
 
-    const handlePlaceOrder = () => {}
+    const orderCreation = useSelector(state => state.orderCreate);
+    const { order, success, error, loading } = orderCreation;
+
+    useEffect(() => {
+        if (success) {
+            history.push(`/order/${order._id}`);
+        }
+        // eslint-disable-next-line
+    }, [history, success]);
+
+    const handlePlaceOrder = () => {
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress: cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            taxPrice: cart.taxPrice,
+            totalPrice: cart.totalPrice,
+        }));
+    }
 
     const items = () => (
         cart.cartItems.map(item => (
@@ -75,7 +102,7 @@ const PlaceOrderScreen = () => {
                                 Payment Method
                             </span>
                             <span className="text-2xl text-gray-500">
-                                {cart.paymentMehod}
+                                {cart.paymentMethod}
                             </span>
                         </div>
                         <div className="text-2xl text-gray-700 mb-8">
@@ -156,13 +183,20 @@ const PlaceOrderScreen = () => {
                                 ${cart.totalPrice}
                             </span>
                         </div>
+                        {error && (
+                            <Alert
+                                icon={<HiOutlineExclamation />}
+                                content={error}
+                                type="danger" 
+                            />
+                        )}
                         <button 
                             className={`${cart.cartItems === 0 ? styles.disabled : ''} ${styles.placeOrderBtn} block mt-8 text-fontMed`}
                             type="button"
                             onClick={handlePlaceOrder}
                             disabled={cart.cartItems === 0}>
                             <span>
-                                Place Order
+                                {loading ? <Spinner /> : 'Place Order'}
                                 <HiOutlineShoppingCart className={styles['icon']} />
                             </span>
                         </button>

@@ -16,7 +16,7 @@ const ProductScreen = () => {
 
     const { id } = useParams();
     const history = useHistory();
-    const [quantity, setQuantity] = useState(1);
+    const [qty, setQty] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -27,10 +27,10 @@ const ProductScreen = () => {
         dispatch(getSingleProduct(id));
     }, [dispatch, id]);
 
-    const handleChange = e => setQuantity(e.target.value);
+    const handleChange = e => setQty(e.target.value);
 
     const handleAddToCart = () => {
-        history.push(`/cart/${id}?quantity=${quantity}`);
+        history.push(`/cart/${id}?qty=${qty}`);
     }
 
     return (
@@ -86,7 +86,7 @@ const ProductScreen = () => {
                                     <label className="mr-5">Quantity:</label>
                                     <select 
                                         className="focus:outline-none focus:ring focus:border-blue-300 cursor-pointer bg-gray-100"
-                                        value={quantity} 
+                                        value={qty}
                                         onChange={handleChange}>
                                         {[...Array(product.countInStock).keys()].map(x => (
                                             <option
