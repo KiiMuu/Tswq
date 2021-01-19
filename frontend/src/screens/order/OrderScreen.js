@@ -45,7 +45,7 @@ const OrderScreen = () => {
 
 			const script = document.createElement('script');
 			script.type = 'text/javascript';
-			script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
+			script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
 			script.async = true;
 			script.onload = () => {
 				setSdk(true);
@@ -67,7 +67,7 @@ const OrderScreen = () => {
 	}, [dispatch, id, successPay, order]);
 
 	const handleSuccessPayment = (paymentResult) => {
-		console.log(paymentResult);
+		console.log('result', paymentResult);
 		dispatch(payOrder(id, paymentResult));
 	};
 
@@ -293,9 +293,6 @@ const OrderScreen = () => {
 								<PayPalButton
 									amount={order.totalPrice}
 									onSuccess={handleSuccessPayment}
-									options={{
-										currency: 'USD',
-									}}
 								/>
 							)}
 						</div>

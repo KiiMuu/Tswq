@@ -5,6 +5,7 @@ const router = express.Router();
 import {
 	addOrder,
 	getOrder,
+	getUserOrders,
 	updateOrderToPaid,
 } from '../controllers/orderController.js';
 
@@ -17,13 +18,18 @@ import { protectRoute } from '../middleware/authMiddleware.js';
 router.post('/', protectRoute, addOrder);
 
 // @desc    Get order by ID
-// @route   PUT /api/orders/:id
+// @route   GET /api/orders/:id
 // @access  Private
 router.get('/:id', protectRoute, getOrder);
 
 // @desc    Update order to paid
-// @route   GET /api/orders/:id/pay
+// @route   PUT /api/orders/:id/pay
 // @access  Private
 router.put('/:id/pay', protectRoute, updateOrderToPaid);
+
+// @desc    Get user orders
+// @route   GET /api/orders/myorders
+// @access  Private
+router.get('/myorders', protectRoute, getUserOrders);
 
 export default router;
