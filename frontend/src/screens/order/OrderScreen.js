@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrderDetails } from '../../actions/orderActions';
+import { getOrderDetails, payOrder } from '../../actions/orderActions';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
+import { ORDER_PAY_RESET } from '../../constants/orderConstants';
 import {
 	HiOutlineCheckCircle,
 	HiOutlineExclamation,
@@ -13,10 +16,15 @@ import {
 const OrderScreen = () => {
 	const { id } = useParams();
 
+	const [sdk, setSdk] = useState(false);
+
 	const dispatch = useDispatch();
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order, error, loading } = orderDetails;
+
+	const orderPay = useSelector((state) => state.orderPay);
+	const { success: successPay, loading: loadingPay } = orderPay; // rename
 
 	if (!loading) {
 		const addDecimals = (num) => {
@@ -32,8 +40,36 @@ const OrderScreen = () => {
 	}
 
 	useEffect(() => {
-		dispatch(getOrderDetails(id));
-	}, [dispatch, id]);
+		const addPayPalScript = async () => {
+			const { data: clientId } = await axios.get('/api/config/paypal');
+
+			const script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
+			script.async = true;
+			script.onload = () => {
+				setSdk(true);
+			};
+
+			document.body.appendChild(script);
+		};
+
+		if (!order || successPay) {
+			dispatch({ type: ORDER_PAY_RESET });
+			dispatch(getOrderDetails(id));
+		} else if (!order.isPaid) {
+			if (!window.paypal) {
+				addPayPalScript();
+			} else {
+				setSdk(true);
+			}
+		}
+	}, [dispatch, id, successPay, order]);
+
+	const handleSuccessPayment = (paymentResult) => {
+		console.log(paymentResult);
+		dispatch(payOrder(id, paymentResult));
+	};
 
 	const items = () =>
 		order.orderItems.map((item) => (
@@ -248,6 +284,22 @@ const OrderScreen = () => {
 							</span>
 						</div>
 					</div>
+					{!order.isPaid && (
+						<div>
+							{loadingPay && <Spinner />}
+							{!sdk ? (
+								<Spinner />
+							) : (
+								<PayPalButton
+									amount={order.totalPrice}
+									onSuccess={handleSuccessPayment}
+									options={{
+										currency: 'USD',
+									}}
+								/>
+							)}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
