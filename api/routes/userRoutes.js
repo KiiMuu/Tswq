@@ -6,11 +6,12 @@ import {
     signInUser,
     signUpUser,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    getUsers
 } from '../controllers/userController.js';
 
 // middlewarea
-import { protectRoute } from '../middleware/authMiddleware.js';
+import { protectRoute, adminAuth } from '../middleware/authMiddleware.js';
 
 // validators
 import { runValidation } from '../validators/index.js';
@@ -52,5 +53,10 @@ router.put(
     runValidation, 
     updateUserProfile
 );
+
+// @desc    Get users
+// @route   GET /api/users
+// @access  Private/Admin
+router.get('/', protectRoute, adminAuth, getUsers);
 
 export default router;
