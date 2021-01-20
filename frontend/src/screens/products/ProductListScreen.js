@@ -3,12 +3,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getAllProducts, deleteProduct } from '../../actions/productActions';
+import {
+	getAllProducts,
+	deleteProduct,
+	createProduct,
+} from '../../actions/productActions';
 import {
 	HiOutlineTrash,
 	HiOutlineInformationCircle,
 	HiOutlinePencil,
 } from 'react-icons/hi';
+import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
 
 const ProductListScreen = () => {
 	const history = useHistory();
@@ -28,17 +33,38 @@ const ProductListScreen = () => {
 		error: errorDelete,
 	} = productDelete;
 
+	const productCreate = useSelector((state) => state.productCreate);
+	const {
+		success: successCreate,
+		loading: loadingCreate,
+		error: errorCreate,
+		product: createdProduct,
+	} = productCreate;
+
 	useEffect(() => {
-		if (successDelete) {
-		}
-		if (userInfo && userInfo.isAdmin) {
-			dispatch(getAllProducts());
-		} else {
+		dispatch({ type: PRODUCT_CREATE_RESET });
+
+		if (!userInfo.isAdmin) {
 			history.push('/signin');
 		}
-	}, [dispatch, userInfo, history, successDelete]);
 
-	const handleCreateProduct = (product) => {};
+		if (successCreate) {
+			history.push(`/admin/product/${createdProduct._id}/edit`);
+		} else {
+			dispatch(getAllProducts());
+		}
+	}, [
+		dispatch,
+		userInfo,
+		history,
+		successDelete,
+		successCreate,
+		createdProduct,
+	]);
+
+	const handleCreateProduct = () => {
+		dispatch(createProduct());
+	};
 
 	const handleProductDelete = (id) => {
 		if (window.confirm('Are you sure?')) {
@@ -107,6 +133,15 @@ const ProductListScreen = () => {
 				<Alert
 					icon={<HiOutlineInformationCircle />}
 					content={errorDelete}
+					type="danger"
+				/>
+			)}
+
+			{loadingCreate && <Spinner />}
+			{errorCreate && (
+				<Alert
+					icon={<HiOutlineInformationCircle />}
+					content={errorCreate}
 					type="danger"
 				/>
 			)}
