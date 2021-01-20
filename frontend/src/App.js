@@ -16,12 +16,17 @@ import OrderScreen from './screens/order/OrderScreen';
 import UserListScreen from './screens/users/UserListScreen';
 import UserEditScreen from './screens/users/UserEditScreen';
 import ProductListScreen from './screens/products/ProductListScreen';
+import ProductEditScreen from './screens/products/ProductEditScreen';
 
 const App = () => {
 	return (
 		<Router>
 			<Navbar />
 			<main className="container">
+				<Route
+					path="/admin/product/:id/edit"
+					component={ProductEditScreen}
+				/>
 				<Route path="/admin/products" component={ProductListScreen} />
 				<Route path="/admin/user/:id/edit" component={UserEditScreen} />
 				<Route path="/admin/users" component={UserListScreen} />
