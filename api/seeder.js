@@ -13,46 +13,47 @@ dotenv.config();
 connectDB();
 
 const importData = async () => {
-    try {
-        // delete all documents
-        await Order.deleteMany();
-        await Product.deleteMany();
-        await User.deleteMany();
+	try {
+		// delete all documents
+		await Order.deleteMany();
+		await Product.deleteMany();
+		await User.deleteMany();
 
-        const createdUsers = await User.insertMany(users);
-        const adminUser = createdUsers[0]._id;
+		const createdUsers = await User.insertMany(users);
+		const adminUser = createdUsers[0]._id;
 
-        const sampleProducts = products.map(product => {
-            return {...product, user: adminUser}
-        });
+		const sampleProducts = products.map((product) => {
+			return { ...product, user: adminUser };
+		});
 
-        await Product.insertMany(sampleProducts);
+		await Product.insertMany(sampleProducts);
 
-        console.log('Data imported!'.green.inverse)
-        process.exit();
-    } catch (err) {
-        console.log(`ERROR: ${err}`.red.inverse);
-        process.exit(1);
-    }
-}
+		console.log('Data imported!'.green.inverse);
+		process.exit();
+	} catch (err) {
+		console.log(`ERROR: ${err}`.red.inverse);
+		process.exit(1);
+	}
+};
 
 const destroyData = async () => {
-    try {
-        // delete all documents
-        await Order.deleteMany();
-        await Product.deleteMany();
-        await User.deleteMany();
+	try {
+		// delete all documents
+		await Order.deleteMany();
+		await Product.deleteMany();
+		await User.deleteMany();
 
-        console.log('Data destroyed!'.red.inverse)
-        process.exit();
-    } catch (err) {
-        console.log(`ERROR: ${err}`.red.inverse);
-        process.exit(1);
-    }
-}
+		console.log('Data destroyed!'.red.inverse);
+		process.exit();
+	} catch (err) {
+		console.log(`ERROR: ${err}`.red.inverse);
+		process.exit(1);
+	}
+};
 
-if (process.argv[2] === '-d') { // node seeder `-d`
-    destroyData();
+if (process.argv[2] === '-d') {
+	// node seeder `-d`
+	destroyData();
 } else {
-    importData();
+	importData();
 }

@@ -3,11 +3,12 @@ const router = express.Router();
 
 // controllers
 import {
-    signInUser,
-    signUpUser,
-    getUserProfile,
-    updateUserProfile,
-    getUsers
+	signInUser,
+	signUpUser,
+	getUserProfile,
+	updateUserProfile,
+	getUsers,
+	deleteUser,
 } from '../controllers/userController.js';
 
 // middlewarea
@@ -21,22 +22,12 @@ import { profileValidator } from '../validators/profile.js';
 // @desc    Signup a user
 // @route   POST /api/users
 // @access  Public
-router.post(
-    '/', 
-    signupValidator, 
-    runValidation, 
-    signUpUser
-);
+router.post('/', signupValidator, runValidation, signUpUser);
 
 // @desc    Auth user & get token
 // @route   POST /api/users/signin
 // @access  Public
-router.post(
-    '/signin', 
-    signinValidator, 
-    runValidation, 
-    signInUser
-);
+router.post('/signin', signinValidator, runValidation, signInUser);
 
 // @desc    Get user profile
 // @route   GET /api/users/profile
@@ -47,16 +38,21 @@ router.get('/profile', protectRoute, getUserProfile);
 // @route   PUT /api/users/profile
 // @access  Private
 router.put(
-    '/profile', 
-    protectRoute, 
-    profileValidator, 
-    runValidation, 
-    updateUserProfile
+	'/profile',
+	protectRoute,
+	profileValidator,
+	runValidation,
+	updateUserProfile
 );
 
 // @desc    Get users
 // @route   GET /api/users
 // @access  Private/Admin
 router.get('/', protectRoute, adminAuth, getUsers);
+
+// @desc    Delete user
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+router.delete('/:id', protectRoute, adminAuth, deleteUser);
 
 export default router;

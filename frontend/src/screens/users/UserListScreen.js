@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getUserList } from '../../actions/userActions';
+import { getUserList, deleteUser } from '../../actions/userActions';
 import {
 	HiOutlineTrash,
 	HiOutlineInformationCircle,
@@ -23,15 +23,22 @@ const UserListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
+	const userDelete = useSelector((state) => state.userDelete);
+	const { success: successDelete } = userDelete;
+
 	useEffect(() => {
 		if (userInfo && userInfo.isAdmin) {
 			dispatch(getUserList());
 		} else {
 			history.push('/signin');
 		}
-	}, [dispatch, userInfo, history]);
+	}, [dispatch, userInfo, history, successDelete]);
 
-	const handleUserDelete = (id) => {};
+	const handleUserDelete = (id) => {
+		if (window.confirm('Are you sure?')) {
+			dispatch(deleteUser(id));
+		}
+	};
 
 	const usersRecords = () =>
 		users.map((user) => (
