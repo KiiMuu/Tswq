@@ -1,20 +1,17 @@
 import { Fragment, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getAllProducts } from '../../actions/productActions';
+import { getAllProducts, deleteProduct } from '../../actions/productActions';
 import {
 	HiOutlineTrash,
 	HiOutlineInformationCircle,
-	HiOutlineCheckCircle,
 	HiOutlinePencil,
-	HiOutlineXCircle,
 } from 'react-icons/hi';
 
 const ProductListScreen = () => {
 	const history = useHistory();
-	const { id } = useParams();
 
 	const dispatch = useDispatch();
 
@@ -24,19 +21,28 @@ const ProductListScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
+	const productDelete = useSelector((state) => state.productDelete);
+	const {
+		success: successDelete,
+		loading: loadingDelete,
+		error: errorDelete,
+	} = productDelete;
+
 	useEffect(() => {
+		if (successDelete) {
+		}
 		if (userInfo && userInfo.isAdmin) {
 			dispatch(getAllProducts());
 		} else {
 			history.push('/signin');
 		}
-	}, [dispatch, userInfo, history]);
+	}, [dispatch, userInfo, history, successDelete]);
 
 	const handleCreateProduct = (product) => {};
 
 	const handleProductDelete = (id) => {
 		if (window.confirm('Are you sure?')) {
-			// TO DO
+			dispatch(deleteProduct(id));
 		}
 	};
 
@@ -95,6 +101,15 @@ const ProductListScreen = () => {
 					</button>
 				</div>
 			</div>
+
+			{loadingDelete && <Spinner />}
+			{errorDelete && (
+				<Alert
+					icon={<HiOutlineInformationCircle />}
+					content={errorDelete}
+					type="danger"
+				/>
+			)}
 
 			{loading ? (
 				<Spinner />
