@@ -1,18 +1,15 @@
 import { useState, useEffect, Fragment } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getUserDetails } from '../../actions/userActions';
+import { getUserDetails, updateUser } from '../../actions/userActions';
 import Alert from '../../components/layout/alert/Alert';
-import {
-	HiOutlineExclamationCircle,
-	HiOutlineCheckCircle,
-	HiOutlineReply,
-} from 'react-icons/hi';
+import { HiOutlineExclamationCircle, HiOutlineReply } from 'react-icons/hi';
+import { USER_UPDATE_RESET } from '../../constants/userConstants';
 
 const UserEditScreen = () => {
-	const history = useHistory();
 	const { id } = useParams();
+	const history = useHistory();
 
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
@@ -23,18 +20,33 @@ const UserEditScreen = () => {
 	const userDetails = useSelector((state) => state.userDetails);
 	const { error, loading, user } = userDetails;
 
+	const userUpdate = useSelector((state) => state.userUpdate);
+	const {
+		error: errorUpdate,
+		loading: loadingUpdate,
+		success: successUpdate,
+	} = userUpdate;
+
 	useEffect(() => {
-		if (!user.name || user._id !== id) {
-			dispatch(getUserDetails(id));
+		if (successUpdate) {
+			dispatch({ type: USER_UPDATE_RESET });
+
+			history.push('/admin/users');
 		} else {
-			setName(user.name);
-			setEmail(user.email);
-			setIsAdmin(user.isAdmin);
+			if (!user.name || user._id !== id) {
+				dispatch(getUserDetails(id));
+			} else {
+				setName(user.name);
+				setEmail(user.email);
+				setIsAdmin(user.isAdmin);
+			}
 		}
-	}, [user, dispatch, id]);
+	}, [user, dispatch, id, successUpdate, history]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		dispatch(updateUser({ _id: id, name, email, isAdmin }));
 	};
 
 	return (
@@ -52,6 +64,14 @@ const UserEditScreen = () => {
 				<div className="flex justify-center -mx-4">
 					<div className="w-full md:w-3/6 px-4">
 						<h1 className="uppercase font-extrabold">Edit user</h1>
+						{loadingUpdate && <Spinner />}
+						{errorUpdate && (
+							<Alert
+								icon={<HiOutlineExclamationCircle />}
+								content={errorUpdate}
+								type="danger"
+							/>
+						)}
 						{loading ? (
 							<Spinner />
 						) : error ? (
@@ -112,6 +132,7 @@ const UserEditScreen = () => {
 								<button
 									type="submit"
 									className="w-full mt-5 uppercase text-fontMed focus:outline-none focus:ring focus:border-blue-300"
+									onClick={handleSubmit}
 								>
 									{loading ? <Spinner /> : 'Save'}
 								</button>
