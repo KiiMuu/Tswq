@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
@@ -13,14 +13,23 @@ import {
 } from 'react-icons/hi';
 
 const UserListScreen = () => {
+	const history = useHistory();
+
 	const dispatch = useDispatch();
 
 	const userList = useSelector((state) => state.userList);
 	const { loading, error, users } = userList;
 
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	useEffect(() => {
-		dispatch(getUserList());
-	}, [dispatch]);
+		if (userInfo && userInfo.isAdmin) {
+			dispatch(getUserList());
+		} else {
+			history.push('/signin');
+		}
+	}, [dispatch, userInfo, history]);
 
 	const handleUserDelete = (id) => {};
 

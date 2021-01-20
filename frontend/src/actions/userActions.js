@@ -14,9 +14,10 @@ import {
 	USER_UPDATE_PROFILE_REQUEST,
 	USER_UPDATE_PROFILE_SUCCESS,
 	USER_UPDATE_PROFILE_FAIL,
-    USER_LIST_REQUEST,
-    USER_LIST_SUCCESS,
-    USER_LIST_FAIL
+	USER_LIST_REQUEST,
+	USER_LIST_SUCCESS,
+	USER_LIST_FAIL,
+	USER_LIST_RESET,
 } from '../constants/userConstants';
 
 export const signup = (name, email, password) => async (dispatch) => {
@@ -105,6 +106,9 @@ export const logout = () => (dispatch) => {
 	});
 	dispatch({
 		type: ORDER_USER_LIST_RESET,
+	});
+	dispatch({
+		type: USER_LIST_RESET,
 	});
 };
 

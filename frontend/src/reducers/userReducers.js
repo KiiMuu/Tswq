@@ -13,9 +13,10 @@ import {
 	USER_UPDATE_PROFILE_SUCCESS,
 	USER_UPDATE_PROFILE_FAIL,
 	USER_DETAILS_RESET,
-    USER_LIST_REQUEST,
-    USER_LIST_SUCCESS,
-    USER_LIST_FAIL
+	USER_LIST_REQUEST,
+	USER_LIST_SUCCESS,
+	USER_LIST_FAIL,
+	USER_LIST_RESET,
 } from '../constants/userConstants';
 
 const initialSigninState = {};
@@ -122,13 +123,10 @@ export const userUpdateProfileReducer = (
 };
 
 const initialUserListState = {
-    users: []
+	users: [],
 };
 
-export const userListReducer = (
-	state = initialUserListState,
-	action
-) => {
+export const userListReducer = (state = initialUserListState, action) => {
 	switch (action.type) {
 		case USER_LIST_REQUEST:
 			return {
@@ -143,6 +141,10 @@ export const userListReducer = (
 			return {
 				error: action.payload,
 				loading: false,
+			};
+		case USER_LIST_RESET:
+			return {
+				users: [],
 			};
 		default:
 			return state;
