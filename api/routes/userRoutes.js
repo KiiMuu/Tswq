@@ -9,6 +9,8 @@ import {
 	updateUserProfile,
 	getUsers,
 	deleteUser,
+	getUser,
+	updateUser,
 } from '../controllers/userController.js';
 
 // middlewarea
@@ -54,5 +56,15 @@ router.get('/', protectRoute, adminAuth, getUsers);
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
 router.delete('/:id', protectRoute, adminAuth, deleteUser);
+
+// @desc    Get user by id
+// @route   GET /api/users/:id
+// @access  Private/Admin
+router.get('/:id', protectRoute, adminAuth, getUser);
+
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+router.put('/:id', protectRoute, updateUser);
 
 export default router;
