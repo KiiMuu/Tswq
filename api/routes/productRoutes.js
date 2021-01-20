@@ -6,6 +6,8 @@ import {
 	getAllProducts,
 	getProduct,
 	deleteProduct,
+	createProduct,
+	updateProduct,
 } from '../controllers/productController.js';
 
 // middlewarea
@@ -27,5 +29,15 @@ router.route('/:id').get(getProduct);
 // @route   DELETE /api/products/:id
 // @access  Priavte/Admin
 router.delete('/:id', protectRoute, adminAuth, deleteProduct);
+
+// @desc    Create product
+// @route   POST /api/products
+// @access  Priavte/Admin
+router.post('/', protectRoute, adminAuth, createProduct);
+
+// @desc    Update product
+// @route   PUT /api/products/:id
+// @access  Priavte/Admin
+router.put('/:id', protectRoute, adminAuth, updateProduct);
 
 export default router;
