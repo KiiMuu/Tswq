@@ -14,12 +14,14 @@ import PaymentScreen from './screens/payment/PaymentScreen';
 import PlaceOrderScreen from './screens/order/PlaceOrderScreen';
 import OrderScreen from './screens/order/OrderScreen';
 import UserListScreen from './screens/users/UserListScreen';
+import UserEditScreen from './screens/users/UserEditScreen';
 
 const App = () => {
 	return (
 		<Router>
 			<Navbar />
 			<main className="container">
+				<Route path="/admin/user/:id/edit" component={UserEditScreen} />
 				<Route path="/admin/users" component={UserListScreen} />
 				<Route path="/order/:id" component={OrderScreen} />
 				<Route path="/shipping" component={ShippingScreen} />

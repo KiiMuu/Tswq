@@ -64,7 +64,7 @@ const UserListScreen = () => {
 					</div>
 				</td>
 				<td className="px-6 py-4 whitespace-nowrap text-right">
-					<Link to={`/user/${user._id}/edit`}>
+					<Link to={`/admin/user/${user._id}/edit`}>
 						<button
 							className="bg-gray-200 rounded-full p-3 focus:outline-none focus:ring focus:border-blue-300"
 							type="button"
