@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrderDetails, payOrder } from '../../actions/orderActions';
+import {
+	getOrderDetails,
+	payOrder,
+	markAsDelivered,
+} from '../../actions/orderActions';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { ORDER_PAY_RESET } from '../../constants/orderConstants';
+import {
+	ORDER_PAY_RESET,
+	ORDER_DELIVER_RESET,
+} from '../../constants/orderConstants';
 import {
 	HiOutlineCheckCircle,
 	HiOutlineExclamation,
@@ -15,6 +22,7 @@ import {
 
 const OrderScreen = () => {
 	const { id } = useParams();
+	const history = useHistory();
 
 	const [sdk, setSdk] = useState(false);
 
@@ -25,6 +33,12 @@ const OrderScreen = () => {
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { success: successPay, loading: loadingPay } = orderPay; // rename
+
+	const orderDeliver = useSelector((state) => state.orderDeliver);
+	const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	if (!loading) {
 		const addDecimals = (num) => {
@@ -40,6 +54,10 @@ const OrderScreen = () => {
 	}
 
 	useEffect(() => {
+		if (!userInfo) {
+			history.push('/signin');
+		}
+
 		const addPayPalScript = async () => {
 			const { data: clientId } = await axios.get('/api/config/paypal');
 
@@ -54,7 +72,8 @@ const OrderScreen = () => {
 			document.body.appendChild(script);
 		};
 
-		if (!order || successPay) {
+		if (!order || successPay || successDeliver) {
+			dispatch({ type: ORDER_DELIVER_RESET });
 			dispatch({ type: ORDER_PAY_RESET });
 			dispatch(getOrderDetails(id));
 		} else if (!order.isPaid) {
@@ -64,11 +83,15 @@ const OrderScreen = () => {
 				setSdk(true);
 			}
 		}
-	}, [dispatch, id, successPay, order]);
+	}, [dispatch, id, successPay, order, successDeliver]);
 
 	const handleSuccessPayment = (paymentResult) => {
 		console.log('result', paymentResult);
 		dispatch(payOrder(id, paymentResult));
+	};
+
+	const handleDeliver = () => {
+		dispatch(markAsDelivered(order));
 	};
 
 	const items = () =>
@@ -297,6 +320,22 @@ const OrderScreen = () => {
 							)}
 						</div>
 					)}
+
+					{loadingDeliver && <Spinner />}
+					{userInfo &&
+						userInfo.isAdmin &&
+						order.isPaid &&
+						!order.isDelivered && (
+							<div>
+								<button
+									type="button"
+									className="block bg-primary text-white py-6 px-4"
+									onClick={handleDeliver}
+								>
+									Mark As Delivered
+								</button>
+							</div>
+						)}
 				</div>
 			</div>
 		</div>

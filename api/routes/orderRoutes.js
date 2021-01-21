@@ -8,6 +8,7 @@ import {
 	getUserOrders,
 	updateOrderToPaid,
 	getOrders,
+	markAsDelivered,
 } from '../controllers/orderController.js';
 
 // middlewarea
@@ -37,5 +38,10 @@ router.get('/myorders', protectRoute, getUserOrders);
 // @route   GET /api/orders
 // @access  Private/Admin
 router.get('/', protectRoute, getOrders);
+
+// @desc    Update order to delivered
+// @route   PUT /api/orders/:id/deliver
+// @access  Private/Admin
+router.get('/:id/deliver', protectRoute, markAsDelivered);
 
 export default router;

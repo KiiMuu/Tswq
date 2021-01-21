@@ -4,13 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
 import { listOrders } from '../../actions/orderActions';
-import {
-	HiOutlineTrash,
-	HiOutlineInformationCircle,
-	HiOutlineCheckCircle,
-	HiOutlinePencil,
-	HiOutlineXCircle,
-} from 'react-icons/hi';
+import { HiOutlineInformationCircle, HiOutlineXCircle } from 'react-icons/hi';
 
 const OrderListScreen = () => {
 	const history = useHistory();
