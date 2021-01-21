@@ -8,6 +8,7 @@ import {
 	deleteProduct,
 	createProduct,
 	updateProduct,
+	reveiwProduct,
 } from '../controllers/productController.js';
 
 // middlewarea
@@ -39,5 +40,10 @@ router.post('/', protectRoute, adminAuth, createProduct);
 // @route   PUT /api/products/:id
 // @access  Priavte/Admin
 router.put('/:id', protectRoute, adminAuth, updateProduct);
+
+// @desc    Create new review
+// @route   POST /api/products/:id/reviews
+// @access  Priavte
+router.post('/:id/reviews', protectRoute, reveiwProduct);
 
 export default router;
