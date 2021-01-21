@@ -7,6 +7,7 @@ import {
 	getOrder,
 	getUserOrders,
 	updateOrderToPaid,
+	getOrders,
 } from '../controllers/orderController.js';
 
 // middlewarea
@@ -31,5 +32,10 @@ router.put('/:id/pay', protectRoute, updateOrderToPaid);
 // @route   GET /api/orders/myorders
 // @access  Private
 router.get('/myorders', protectRoute, getUserOrders);
+
+// @desc    Get all orders
+// @route   GET /api/orders
+// @access  Private/Admin
+router.get('/', protectRoute, getOrders);
 
 export default router;
