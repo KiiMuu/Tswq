@@ -134,7 +134,7 @@ const UserEditScreen = () => {
 									className="w-full mt-5 uppercase text-fontMed focus:outline-none focus:ring focus:border-blue-300"
 									onClick={handleSubmit}
 								>
-									{loading ? <Spinner /> : 'Save'}
+									{loadingUpdate ? <Spinner /> : 'Save'}
 								</button>
 							</form>
 						)}

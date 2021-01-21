@@ -2,9 +2,10 @@ import { useState, useEffect, Fragment } from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../components/layout/spinner/Spinner';
-import { getSingleProduct } from '../../actions/productActions';
+import { getSingleProduct, updateProduct } from '../../actions/productActions';
 import Alert from '../../components/layout/alert/Alert';
 import { HiOutlineExclamationCircle, HiOutlineReply } from 'react-icons/hi';
+import { PRODUCT_UPDATE_RESET } from '../../constants/productConstants';
 
 const ProductEditScreen = () => {
 	const { id } = useParams();
@@ -23,24 +24,48 @@ const ProductEditScreen = () => {
 	const productDetails = useSelector((state) => state.productDetails);
 	const { error, loading, product } = productDetails;
 
+	const productUpdate = useSelector((state) => state.productUpdate);
+	const {
+		error: errorUpdate,
+		loading: loadingUpdate,
+		success: successUpdate,
+	} = productUpdate;
+
 	useEffect(() => {
-		if (!product.name || product._id !== id) {
-			dispatch(getSingleProduct(id));
+		if (successUpdate) {
+			dispatch({ type: PRODUCT_UPDATE_RESET });
+
+			history.push('/admin/products');
 		} else {
-			setName(product.name);
-			setPrice(product.price);
-			setImage(product.image);
-			setBrand(product.brand);
-			setCategory(product.category);
-			setCountInStock(product.countInStock);
-			setDescription(product.description);
+			if (!product.name || product._id !== id) {
+				dispatch(getSingleProduct(id));
+			} else {
+				setName(product.name);
+				setPrice(product.price);
+				setImage(product.image);
+				setBrand(product.brand);
+				setCategory(product.category);
+				setCountInStock(product.countInStock);
+				setDescription(product.description);
+			}
 		}
-	}, [product, dispatch, id, history]);
+	}, [product, dispatch, id, history, successUpdate]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		// TO DO
+		dispatch(
+			updateProduct({
+				_id: id,
+				name,
+				price,
+				image,
+				brand,
+				category,
+				description,
+				countInStock,
+			})
+		);
 	};
 
 	return (
@@ -60,14 +85,14 @@ const ProductEditScreen = () => {
 						<h1 className="uppercase font-extrabold">
 							Edit product
 						</h1>
-						{/* {loadingUpdate && <Spinner />}
+						{loadingUpdate && <Spinner />}
 						{errorUpdate && (
 							<Alert
 								icon={<HiOutlineExclamationCircle />}
 								content={errorUpdate}
 								type="danger"
 							/>
-						)} */}
+						)}
 						{loading ? (
 							<Spinner />
 						) : error ? (
@@ -167,7 +192,7 @@ const ProductEditScreen = () => {
 									className="w-full mt-5 uppercase text-fontMed focus:outline-none focus:ring focus:border-blue-300"
 									onClick={handleSubmit}
 								>
-									{loading ? <Spinner /> : 'Save'}
+									{loadingUpdate ? <Spinner /> : 'Save'}
 								</button>
 							</form>
 						)}
