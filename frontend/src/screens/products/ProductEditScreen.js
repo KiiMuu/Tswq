@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect, Fragment } from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ const ProductEditScreen = () => {
 	const [category, setCategory] = useState('');
 	const [countInStock, setCountInStock] = useState(0);
 	const [description, setDescription] = useState('');
+	const [upload, setUpload] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -66,6 +68,30 @@ const ProductEditScreen = () => {
 				countInStock,
 			})
 		);
+	};
+
+	const handleFileUpload = async (e) => {
+		const file = e.target.files[0];
+		const formData = new FormData();
+		formData.append('image', file);
+
+		setUpload(true);
+
+		try {
+			const config = {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			};
+
+			const { data } = await axios.post('/api/upload', formData, config);
+
+			setImage(data);
+			setUpload(false);
+		} catch (err) {
+			console.error(err);
+			setUpload(false);
+		}
 	};
 
 	return (
@@ -138,6 +164,15 @@ const ProductEditScreen = () => {
 											setImage(e.target.value)
 										}
 									/>
+									<div className="flex text-gray-600">
+										<input
+											id="file-upload"
+											name="file-upload"
+											type="file"
+											onChange={handleFileUpload}
+										/>
+										{upload && <Spinner />}
+									</div>
 								</div>
 								<div className="mb-5">
 									<input

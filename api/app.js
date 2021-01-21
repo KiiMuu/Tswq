@@ -37,6 +37,7 @@ app.get('/api/config/paypal', (req, res) => {
 });
 
 // serve static files
+const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // error handlers
