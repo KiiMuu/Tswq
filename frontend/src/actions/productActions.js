@@ -21,11 +21,13 @@ import {
 } from '../constants/productConstants';
 
 // redux thunk comes here to make asynchronous requests
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (searchTerm = '') => async (dispatch) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 
-		const { data } = await axios.get('/api/products');
+		const { data } = await axios.get(
+			`/api/products?searchTerm=${searchTerm}`
+		);
 
 		dispatch({
 			type: PRODUCT_LIST_SUCCESS,

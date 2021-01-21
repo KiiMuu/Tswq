@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Navbar.module.scss';
 import {
@@ -12,6 +12,7 @@ import {
 import useToggle from '../../../hooks/useToggle';
 import Dropdown from '../../layout/dropdown/Dropdown';
 import { logout } from '../../../actions/userActions';
+import SearchBox from '../../../components/search/SearchBox';
 
 const Navbar = () => {
 	const { isOpen, handleToggle, elementRef } = useToggle();
@@ -90,6 +91,11 @@ const Navbar = () => {
 					</div>
 					<div className="hidden md:block">
 						<div className="flex items-baseline space-x-4 text-fontMed uppercase">
+							<Route
+								render={({ history }) => (
+									<SearchBox history={history} />
+								)}
+							/>
 							<Link
 								className="inline-flex items-center text-gray-300 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md"
 								to="/cart"
