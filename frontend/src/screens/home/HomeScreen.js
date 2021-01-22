@@ -11,6 +11,7 @@ import {
 	HiOutlineInformationCircle,
 } from 'react-icons/hi';
 import TopProductsScreen from '../products/TopProductsScreen';
+import Meta from '../../components/meta/Meta';
 
 const HomeScreen = () => {
 	const { searchTerm } = useParams();
@@ -27,6 +28,7 @@ const HomeScreen = () => {
 
 	return (
 		<Fragment>
+			<Meta />
 			{!searchTerm && <TopProductsScreen />}
 			<div className="mt-12">
 				<h1 className="mb-5 text-defaultSize uppercase text-gray-800">

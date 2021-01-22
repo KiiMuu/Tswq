@@ -16,6 +16,7 @@ import {
 } from '../../actions/productActions';
 import ProductSkeleton from '../../skeletons/ProductSkeleton';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../../constants/productConstants';
+import Meta from '../../components/meta/Meta';
 
 const ProductScreen = () => {
 	const { id } = useParams();
@@ -88,6 +89,7 @@ const ProductScreen = () => {
 				/>
 			) : (
 				<div className="text-defaultSize flex flex-wrap -mx-4">
+					<Meta title={product.name} />
 					<div className="w-full md:w-3/6 md:mb-0 mb-5 px-4">
 						<img
 							src={product.image}
