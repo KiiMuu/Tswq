@@ -19,7 +19,7 @@ const SearchBox = () => {
 	return (
 		<form onSubmit={handleSubmit} className="flex justify-center">
 			<input
-				className="h-15 pl-5 focus:outline-none focus:ring focus:border-blue-500 shadow rounded-none"
+				className="w-full h-15 pl-5 bg-gray-600 text-white focus:outline-none focus:ring focus:border-blue-500 shadow rounded-none"
 				type="text"
 				inputMode="text"
 				name="q"
