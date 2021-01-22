@@ -10,6 +10,7 @@ import {
 	HiOutlineExclamationCircle,
 	HiOutlineInformationCircle,
 } from 'react-icons/hi';
+import TopProductsScreen from '../products/TopProductsScreen';
 
 const HomeScreen = () => {
 	const { searchTerm } = useParams();
@@ -26,6 +27,7 @@ const HomeScreen = () => {
 
 	return (
 		<Fragment>
+			{!searchTerm && <TopProductsScreen />}
 			<div className="mt-12">
 				<h1 className="mb-5 text-defaultSize uppercase text-gray-800">
 					Latest products

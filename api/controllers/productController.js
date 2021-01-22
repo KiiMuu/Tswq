@@ -134,6 +134,12 @@ const reveiwProduct = asyncHandler(async (req, res, next) => {
 	}
 });
 
+const getTopProducts = asyncHandler(async (req, res, next) => {
+	const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+	res.json(products);
+});
+
 export {
 	getAllProducts,
 	getProduct,
@@ -141,4 +147,5 @@ export {
 	createProduct,
 	updateProduct,
 	reveiwProduct,
+	getTopProducts,
 };

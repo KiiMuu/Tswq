@@ -9,6 +9,7 @@ import {
 	createProduct,
 	updateProduct,
 	reveiwProduct,
+	getTopProducts,
 } from '../controllers/productController.js';
 
 // middlewarea
@@ -45,5 +46,10 @@ router.put('/:id', protectRoute, adminAuth, updateProduct);
 // @route   POST /api/products/:id/reviews
 // @access  Priavte
 router.post('/:id/reviews', protectRoute, reveiwProduct);
+
+// @desc    Get top products
+// @route   GET /api/products/top
+// @access  Public
+router.route('/top/prods').get(getTopProducts);
 
 export default router;
