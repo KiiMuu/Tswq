@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/layout/alert/Alert';
 import Spinner from '../../components/layout/spinner/Spinner';
@@ -14,14 +14,16 @@ import {
 	HiOutlinePencil,
 } from 'react-icons/hi';
 import { PRODUCT_CREATE_RESET } from '../../constants/productConstants';
+import Paginate from '../../components/layout/pagination/Paginate';
 
 const ProductListScreen = () => {
 	const history = useHistory();
+	const { pageNumber } = useParams() || 1;
 
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
-	const { loading, error, products } = productList;
+	const { loading, error, products, page, pages } = productList;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -51,7 +53,7 @@ const ProductListScreen = () => {
 		if (successCreate) {
 			history.push(`/admin/product/${createdProduct._id}/edit`);
 		} else {
-			dispatch(getAllProducts());
+			dispatch(getAllProducts('', pageNumber));
 		}
 	}, [
 		dispatch,
@@ -60,6 +62,7 @@ const ProductListScreen = () => {
 		successDelete,
 		successCreate,
 		createdProduct,
+		pageNumber,
 	]);
 
 	const handleCreateProduct = () => {
@@ -162,7 +165,7 @@ const ProductListScreen = () => {
 				/>
 			) : (
 				<Fragment>
-					<div className="flex flex-col text-fontMed">
+					<div className="flex flex-col text-fontMed mb-5">
 						<div className="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
 							<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 								<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -217,6 +220,7 @@ const ProductListScreen = () => {
 							</div>
 						</div>
 					</div>
+					<Paginate pages={pages} page={page} isAdmin={true} />
 				</Fragment>
 			)}
 		</div>

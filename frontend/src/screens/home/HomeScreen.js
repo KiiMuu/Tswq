@@ -5,6 +5,7 @@ import Product from '../../components/product/Product';
 import { getAllProducts } from '../../actions/productActions';
 import ProductsSkeleton from '../../skeletons/ProductsSkeleton';
 import Alert from '../../components/layout/alert/Alert';
+import Paginate from '../../components/layout/pagination/Paginate';
 import {
 	HiOutlineExclamationCircle,
 	HiOutlineInformationCircle,
@@ -12,15 +13,16 @@ import {
 
 const HomeScreen = () => {
 	const { searchTerm } = useParams();
+	const { pageNumber } = useParams() || 1;
 
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
-	const { loading, error, products } = productList;
+	const { loading, error, products, page, pages } = productList;
 
 	useEffect(() => {
-		dispatch(getAllProducts(searchTerm));
-	}, [dispatch, searchTerm]);
+		dispatch(getAllProducts(searchTerm, pageNumber));
+	}, [dispatch, searchTerm, pageNumber]);
 
 	return (
 		<Fragment>
@@ -48,11 +50,18 @@ const HomeScreen = () => {
 						type="normal"
 					/>
 				) : (
-					<div className="flex flex-wrap -mx-4">
-						{products.map((product) => (
-							<Product product={product} key={product._id} />
-						))}
-					</div>
+					<Fragment>
+						<div className="flex flex-wrap -mx-4">
+							{products.map((product) => (
+								<Product product={product} key={product._id} />
+							))}
+						</div>
+						<Paginate
+							pages={pages}
+							page={page}
+							searchTerm={searchTerm ? searchTerm : ''}
+						/>
+					</Fragment>
 				)}
 			</div>
 		</Fragment>
